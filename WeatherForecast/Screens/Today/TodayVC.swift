@@ -47,7 +47,7 @@ extension TodayVC {
         viewModel.getWeather()
     }
     
-    @IBAction func btnShareClicked(_ sender: Any) {
+    @IBAction func btnShareClicked(_ sender: UIButton) {
         guard let location = viewModel.userLocation else {
             AlertHelper.showAlert("No user location to share")
             return
@@ -55,6 +55,9 @@ extension TodayVC {
         
         let url = "http://maps.apple.com/maps?saddr=\(location.latitude),\(location.longitude)"
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        if Platform.isIPad {
+            activityViewController.popoverPresentationController?.sourceView  = sender
+        }
         present(activityViewController, animated: true, completion: nil)
     }
 }
